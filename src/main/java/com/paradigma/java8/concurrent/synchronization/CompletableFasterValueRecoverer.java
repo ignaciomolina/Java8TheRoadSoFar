@@ -1,4 +1,4 @@
-package com.paradigma.java8.concurrent.syncrhonization;
+package com.paradigma.java8.concurrent.synchronization;
 
 import static com.paradigma.java8.utils.TimeWaiter.waitFor;
 import static java.time.Duration.ofSeconds;
