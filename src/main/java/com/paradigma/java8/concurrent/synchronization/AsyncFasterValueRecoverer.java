@@ -8,11 +8,11 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.IntFunction;
 import java.util.stream.IntStream;
 
-public class CompletableFasterValueRecoverer {
+public class AsyncFasterValueRecoverer {
 
   private static CompletableFuture<Integer>[] startJobs(int numberOfJobs) {
     return IntStream.range(0, numberOfJobs)
-                    .mapToObj(CompletableFasterValueRecoverer::generateRandomNumber)
+                    .mapToObj(AsyncFasterValueRecoverer::generateRandomNumber)
                     .toArray((IntFunction<CompletableFuture<Integer>[]>) CompletableFuture[]::new);
   }
 
