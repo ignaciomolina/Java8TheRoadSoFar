@@ -21,7 +21,7 @@ public class TriFunctionTest {
 
     TriFunction<Float, Float, Float, Point> toPoint = Point::new;
 
-    String result = toPoint.transform(1.0F, 2.0F, 3.0F).toString();
+    String result = toPoint.andThen(Point::toString).transform(1.0F, 2.0F, 3.0F);
 
     assertEquals("Point represented by (1.0, 2.0, 3.0)", result);
   }

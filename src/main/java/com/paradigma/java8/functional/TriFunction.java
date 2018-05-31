@@ -1,9 +1,17 @@
 package com.paradigma.java8.functional;
 
+import java.util.Objects;
+import java.util.function.Function;
+
 @FunctionalInterface
 public interface TriFunction<T, U, V, R> {
 
   R transform(T t, U u, V v);
+
+  default <S> TriFunction<T, U, V, S> andThen(Function<? super R, ? extends S> after) {
+    Objects.requireNonNull(after);
+    return (T t, U u, V v) -> after.apply(transform(t, u, v));
+  }
 }
 
 class Point {
