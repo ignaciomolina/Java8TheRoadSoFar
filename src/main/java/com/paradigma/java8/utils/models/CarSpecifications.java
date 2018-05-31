@@ -30,14 +30,14 @@ public class CarSpecifications {
 
   public static class Specification {
 
-    private Duration assamblyTime;
+    private Duration assemblyTime;
 
-    public Specification(Duration assamblyTime) {
-      this.assamblyTime = assamblyTime;
+    public Specification(Duration assemblyTime) {
+      this.assemblyTime = assemblyTime;
     }
 
-    public Duration getAssamblyTime() {
-      return assamblyTime;
+    public Duration getAssemblyTime() {
+      return assemblyTime;
     }
   }
 
@@ -45,8 +45,8 @@ public class CarSpecifications {
 
     private List<String> pieces;
 
-    public PiecesSpecification(Duration assamblyTime, List<String> pieces) {
-      super(assamblyTime);
+    public PiecesSpecification(Duration assemblyTime, List<String> pieces) {
+      super(assemblyTime);
       this.pieces = new ArrayList<>(pieces);
     }
 
@@ -59,8 +59,8 @@ public class CarSpecifications {
 
     private String color;
 
-    public ColorSpecification(Duration assamblyTime, String color) {
-      super(assamblyTime);
+    public ColorSpecification(Duration assemblyTime, String color) {
+      super(assemblyTime);
       this.color = color;
     }
 
@@ -73,8 +73,8 @@ public class CarSpecifications {
 
     private String wheels;
 
-    public WheelSpecification(Duration assamblyTime, String wheels) {
-      super(assamblyTime);
+    public WheelSpecification(Duration assemblyTime, String wheels) {
+      super(assemblyTime);
       this.wheels = wheels;
     }
 

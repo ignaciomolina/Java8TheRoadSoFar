@@ -1,9 +1,10 @@
 package com.paradigma.java8.concurrent.synchronization;
 
 import static com.paradigma.java8.utils.TimeWaiter.waitFor;
+import static java.time.Duration.ofSeconds;
+import static java.util.Arrays.asList;
 
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.function.Function;
@@ -15,12 +16,12 @@ import com.paradigma.java8.utils.models.CarSpecifications.ColorSpecification;
 import com.paradigma.java8.utils.models.CarSpecifications.PiecesSpecification;
 import com.paradigma.java8.utils.models.CarSpecifications.WheelSpecification;
 
-public class CarAssamblyLine {
+public class CarAssemblyLine {
 
   public CompletionStage<Car> buildCar(CarSpecifications specifications) {
 
     return CompletableFuture.supplyAsync(createPieces(specifications))
-                            .thenApply(assamblyPieces(specifications))
+                            .thenApply(assemblyPieces(specifications))
                             .thenApply(paint(specifications))
                             .thenApply(addWheels(specifications))
                             .thenApply(submit());
@@ -35,12 +36,12 @@ public class CarAssamblyLine {
     };
   }
   
-  private Function<Car.Builder, Car.Builder> assamblyPieces(CarSpecifications specifications) {
+  private Function<Car.Builder, Car.Builder> assemblyPieces(CarSpecifications specifications) {
     return builder -> {
       CarSpecifications.PiecesSpecification pieces = specifications.getPiecesDetails();
 
-      System.out.println("Assamblying pieces...");
-      waitFor(pieces.getAssamblyTime());
+      System.out.println("Assemblying pieces...");
+      waitFor(pieces.getAssemblyTime());
       return builder.pieces(pieces.getPieces());
     };
   }
@@ -51,7 +52,7 @@ public class CarAssamblyLine {
       ColorSpecification colorDetails = specifications.getColorDetails();
 
       System.out.println("Painting bodywork...");
-      waitFor(colorDetails.getAssamblyTime());
+      waitFor(colorDetails.getAssemblyTime());
       return builder.color(colorDetails.getColor());
     };
   }
@@ -62,7 +63,7 @@ public class CarAssamblyLine {
       WheelSpecification wheelsDetails = specifications.getWheelDetails();
 
       System.out.println("Coupling wheels...");
-      waitFor(wheelsDetails.getAssamblyTime());
+      waitFor(wheelsDetails.getAssemblyTime());
       return builder.wheels(wheelsDetails.getWheelModel());
     };
   }
@@ -71,22 +72,32 @@ public class CarAssamblyLine {
     return Car.Builder::build;
   }
 
+  public static void says(int seconds, String message) {
+    waitFor(ofSeconds(seconds));
+    System.out.println("Seller says: " + message);
+  }
+  
   public static void main(String [] args) {
 
-    CarAssamblyLine assamblyLine = new CarAssamblyLine();
+    CarAssemblyLine assemblyLine = new CarAssemblyLine();
 
-    PiecesSpecification pieces = new PiecesSpecification(Duration.ofSeconds(3), Arrays.asList("doors", "bodywork", "motor", "brakes"));
-    ColorSpecification color = new ColorSpecification(Duration.ofSeconds(2), "Red");
-    WheelSpecification wheels = new WheelSpecification(Duration.ofSeconds(1), "cool ones");
+    PiecesSpecification pieces = new PiecesSpecification(ofSeconds(3), asList("doors", "bodywork", "motor", "brakes"));
+    ColorSpecification color = new ColorSpecification(ofSeconds(2), "red");
+    WheelSpecification wheels = new WheelSpecification(ofSeconds(1), "cool ones");
 
     CarSpecifications specifications = new CarSpecifications(pieces, color, wheels);
 
-    CompletionStage<Car> promise = assamblyLine.buildCar(specifications);
-    promise.thenAccept(car -> System.out.println("Here is your great new car just as you wanted: " + car));
+    CompletionStage<Car> carPromise = assemblyLine.buildCar(specifications);
 
-    System.out.println("Car order made!");
-    
-    promise.toCompletableFuture().join();
+    CompletableFuture.runAsync(() -> says(0, "Car order made!"))
+                     .thenRun(() -> says(2, "You can wait there meanwhile..."))
+                     .thenRun(() -> says(1, "Do you want something to drink?"))
+                     .thenCombine(carPromise, (v, car) -> {
+                       says(0, "Here is your great new car just as you wanted: " + car);
+                       return car;
+                     })
+                     .toCompletableFuture()
+                     .join();
 
   }
 }
