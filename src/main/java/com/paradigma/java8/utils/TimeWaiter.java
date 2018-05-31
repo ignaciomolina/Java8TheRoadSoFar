@@ -1,5 +1,6 @@
 package com.paradigma.java8.utils;
 
+import java.io.IOException;
 import java.time.Duration;
 
 public class TimeWaiter {
@@ -10,6 +11,16 @@ public class TimeWaiter {
 
       Thread.sleep(duration.toMillis());
     } catch (InterruptedException e) {
+
+      throw new RuntimeException(e);
+    }
+  }
+  
+  public static void waitKey() {
+    try {
+
+      System.in.read();
+    } catch (IOException e) {
 
       throw new RuntimeException(e);
     }
