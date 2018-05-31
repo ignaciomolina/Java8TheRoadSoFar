@@ -76,7 +76,7 @@ public class CarAssemblyLine {
     waitFor(ofSeconds(seconds));
     System.out.println("Seller says: " + message);
   }
-  
+
   public static void main(String [] args) {
 
     CarAssemblyLine assemblyLine = new CarAssemblyLine();
@@ -95,9 +95,8 @@ public class CarAssemblyLine {
                      .thenCombine(carPromise, (v, car) -> {
                        says(0, "Here is your great new car just as you wanted: " + car);
                        return car;
-                     })
-                     .toCompletableFuture()
-                     .join();
-
+                     });
+//                     .toCompletableFuture()
+//                     .join();
   }
 }
