@@ -39,9 +39,7 @@ class Point {
   private float z;
 
   public Point(float x, float y) {
-    this.x = x;
-    this.y = y;
-    z = 0.0F;
+    this(x, y, 0.0F);
   }
 
   public Point(float x, float y, float z) {
