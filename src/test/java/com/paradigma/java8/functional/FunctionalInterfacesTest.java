@@ -30,10 +30,16 @@ public class FunctionalInterfacesTest {
   @Test
   public void supplierTest() throws Exception {
 
-    Supplier<Callable<String>> oldSupplier = () -> new Callable<String>() {
+    Supplier<Callable<String>> oldSupplier = new Supplier<Callable<String>>() {
       @Override
-      public String call() throws Exception {
-        return HELLO_WORLD;
+      public Callable<String> get() {
+
+        return new Callable<String>() {
+          @Override
+          public String call() throws Exception {
+            return HELLO_WORLD;
+          }
+        };
       }
     };
 
