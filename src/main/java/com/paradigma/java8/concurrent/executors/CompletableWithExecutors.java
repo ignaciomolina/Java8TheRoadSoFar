@@ -1,6 +1,7 @@
 package com.paradigma.java8.concurrent.executors;
 
 import static com.paradigma.java8.utils.TimeWaiter.waitFor;
+import static com.paradigma.java8.utils.TimeWaiter.waitKey;
 import static java.time.Duration.ofSeconds;
 
 import java.util.concurrent.CompletableFuture;
@@ -53,6 +54,8 @@ public class CompletableWithExecutors {
 
     System.out.println("Execution of " + numberOfJobs + " jobs with a single threading executor.");
     startJobsInExecutor(numberOfJobs, Executors.newSingleThreadExecutor());
+
+    waitKey();
 
     System.out.println("Execution of " + numberOfJobs + " jobs with a multi threading executor.");
     waitFor(ofSeconds(1L));
