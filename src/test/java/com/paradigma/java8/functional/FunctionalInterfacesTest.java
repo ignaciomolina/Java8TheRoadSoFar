@@ -3,9 +3,11 @@ package com.paradigma.java8.functional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.paradigma.java8.utils.models.Car;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
@@ -75,5 +77,39 @@ public class FunctionalInterfacesTest {
 
     assertEquals(2, countElements.apply(Arrays.asList("a", "b")).intValue());
     assertEquals(4, duplicateNumberOfElements.andThen(countElements).apply(Arrays.asList("a", "b")).intValue());
+  }
+
+  @Test
+  public void runnableTest() {
+
+    new Thread(new Runnable() {
+      @Override
+      public void run() {
+        System.out.println("I'm an old runnable!");
+      }
+    }).start();
+
+    new Thread(() -> System.out.println("I'm a modern runnable!"));
+
+    new Thread(this::runnableExample);
+  }
+
+  private void runnableExample() {
+    System.out.println("I'm a modern runnable called by method reference!");
+  }
+
+  @Test
+  public void comparatorTest() {
+
+    Comparator<Car> oldComparator = new Comparator<Car>() {
+      @Override
+      public int compare(Car c1, Car c2) {
+        return c1.getColor().compareTo(c2.getColor());
+      }
+    };
+
+    Comparator<Car> newComparator = (c1, c2) -> c1.getColor().compareTo(c2.getColor());
+
+    Comparator<Car> evenNewerComparator = Comparator.comparing(Car::getColor);
   }
 }

@@ -3,18 +3,21 @@ package com.paradigma.java8.utils.models;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Car {
 
   private Set<String> pieces;
   private String color;
   private String wheels;
+  private int weight;
 
   private Car(Set<String> pieces, String color, String wheels) {
 
     this.pieces = pieces;
     this.color = color;
     this.wheels = wheels;
+    weight = ThreadLocalRandom.current().nextInt(800, 2200);
   }
 
   public static Builder builder( ) {
@@ -57,5 +60,21 @@ public class Car {
       
       return new Car(pieces, color, wheels);
     }
+  }
+
+  public Set<String> getPieces() {
+    return pieces;
+  }
+
+  public String getColor() {
+    return color;
+  }
+
+  public String getWheels() {
+    return wheels;
+  }
+
+  public int getWeight() {
+    return weight;
   }
 }
