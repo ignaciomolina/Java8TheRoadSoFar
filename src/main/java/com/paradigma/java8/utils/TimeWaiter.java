@@ -10,10 +10,8 @@ public class TimeWaiter {
   public static void waitFor(Duration duration) {
 
     try {
-
       Thread.sleep(duration.toMillis());
     } catch (InterruptedException e) {
-
       throw new RuntimeException(e);
     }
   }
