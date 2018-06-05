@@ -47,6 +47,7 @@ public class FunctionalInterfacesTest {
 
     Supplier<Callable<String>> callableSupplier = () -> () -> HELLO_WORLD;
 
+    assertEquals(HELLO_WORLD, oldSupplier.get().call());
     assertEquals(HELLO_WORLD, callableSupplier.get().call());
   }
 
@@ -89,9 +90,9 @@ public class FunctionalInterfacesTest {
       }
     }).start();
 
-    new Thread(() -> System.out.println("I'm a modern runnable!"));
+    new Thread(() -> System.out.println("I'm a modern runnable!")).start();
 
-    new Thread(this::runnableExample);
+    new Thread(this::runnableExample).start();
   }
 
   private void runnableExample() {
