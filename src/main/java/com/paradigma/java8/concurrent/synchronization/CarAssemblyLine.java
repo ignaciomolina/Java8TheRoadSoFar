@@ -4,17 +4,20 @@ import static com.paradigma.java8.utils.TimeWaiter.waitFor;
 import static java.time.Duration.ofSeconds;
 import static java.util.Arrays.asList;
 
-import java.time.Duration;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.CompletionStage;
-import java.util.function.Function;
-import java.util.function.Supplier;
-
 import com.paradigma.java8.utils.models.Car;
 import com.paradigma.java8.utils.models.CarSpecifications;
 import com.paradigma.java8.utils.models.CarSpecifications.ColorSpecification;
 import com.paradigma.java8.utils.models.CarSpecifications.PiecesSpecification;
 import com.paradigma.java8.utils.models.CarSpecifications.WheelSpecification;
+import com.paradigma.java8.utils.models.Color;
+import com.paradigma.java8.utils.models.Piece;
+import com.paradigma.java8.utils.models.Wheel;
+
+import java.time.Duration;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class CarAssemblyLine {
 
@@ -81,9 +84,9 @@ public class CarAssemblyLine {
 
     CarAssemblyLine assemblyLine = new CarAssemblyLine();
 
-    PiecesSpecification pieces = new PiecesSpecification(ofSeconds(3), asList("doors", "bodywork", "motor", "brakes"));
-    ColorSpecification color = new ColorSpecification(ofSeconds(2), "red");
-    WheelSpecification wheels = new WheelSpecification(ofSeconds(1), "cool ones");
+    PiecesSpecification pieces = new PiecesSpecification(ofSeconds(3), asList(Piece.DOORS, Piece.BODY, Piece.ENGINE, Piece.BRAKES));
+    ColorSpecification color = new ColorSpecification(ofSeconds(2), Color.RED);
+    WheelSpecification wheels = new WheelSpecification(ofSeconds(1), Wheel.BRIDGESTONE);
 
     CarSpecifications specifications = new CarSpecifications(pieces, color, wheels);
 

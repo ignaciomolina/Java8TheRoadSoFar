@@ -6,12 +6,12 @@ import java.util.Set;
 
 public class Car {
 
-  private Set<String> pieces;
-  private String color;
-  private String wheels;
+  private Set<Piece> pieces;
+  private Color color;
+  private Wheel wheels;
   private int weight;
 
-  private Car(Set<String> pieces, String color, String wheels, int weight) {
+  private Car(Set<Piece> pieces, Color color, Wheel wheels, int weight) {
 
     this.pieces = pieces;
     this.color = color;
@@ -31,27 +31,27 @@ public class Car {
 
   public static class Builder {
 
-    private Set<String> pieces;
-    private String color;
-    private String wheels;
+    private Set<Piece> pieces;
+    private Color color;
+    private Wheel wheels;
     private int weight;
 
     private Builder() {
     }
 
-    public Builder pieces(List<String> pieces) {
+    public Builder pieces(List<Piece> pieces) {
 
       this.pieces = new HashSet<>(pieces);
       return this;
     }
 
-    public Builder color(String color) {
+    public Builder color(Color color) {
 
       this.color = color;
       return this;
     }
-    
-    public Builder wheels(String wheels) {
+
+    public Builder wheels(Wheel wheels) {
       this.wheels = wheels;
       return this;
     }
@@ -67,15 +67,15 @@ public class Car {
     }
   }
 
-  public Set<String> getPieces() {
+  public Set<Piece> getPieces() {
     return pieces;
   }
 
-  public String getColor() {
+  public Color getColor() {
     return color;
   }
 
-  public String getWheels() {
+  public Wheel getWheels() {
     return wheels;
   }
 

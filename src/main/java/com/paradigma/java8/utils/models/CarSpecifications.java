@@ -43,42 +43,42 @@ public class CarSpecifications {
 
   public static class PiecesSpecification extends Specification {
 
-    private List<String> pieces;
+    private List<Piece> pieces;
 
-    public PiecesSpecification(Duration assemblyTime, List<String> pieces) {
+    public PiecesSpecification(Duration assemblyTime, List<Piece> pieces) {
       super(assemblyTime);
       this.pieces = new ArrayList<>(pieces);
     }
 
-    public List<String> getPieces() {
+    public List<Piece> getPieces() {
       return pieces;
     }
   }
   
   public static class ColorSpecification extends Specification {
 
-    private String color;
+    private Color color;
 
-    public ColorSpecification(Duration assemblyTime, String color) {
+    public ColorSpecification(Duration assemblyTime, Color color) {
       super(assemblyTime);
       this.color = color;
     }
 
-    public String getColor() {
+    public Color getColor() {
       return color;
     }
   }
   
   public static class WheelSpecification extends Specification {
 
-    private String wheels;
+    private Wheel wheels;
 
-    public WheelSpecification(Duration assemblyTime, String wheels) {
+    public WheelSpecification(Duration assemblyTime, Wheel wheels) {
       super(assemblyTime);
       this.wheels = wheels;
     }
 
-    public String getWheelModel() {
+    public Wheel getWheelModel() {
       return wheels;
     }
   }
