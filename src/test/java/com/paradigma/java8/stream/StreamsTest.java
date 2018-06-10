@@ -4,7 +4,7 @@ import com.paradigma.java8.utils.models.Car;
 import com.paradigma.java8.utils.models.Color;
 import com.paradigma.java8.utils.models.Piece;
 import com.paradigma.java8.utils.models.Wheel;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -17,11 +17,14 @@ import java.util.stream.Stream;
 
 public class StreamsTest {
 
-  List<Car> cars;
+  private static List<Car> cars;
 
-  @Before
-  public void setUp() {
-    cars = IntStream.range(1, 101).parallel().mapToObj(i -> createCar()).collect(Collectors.toList());
+  @BeforeClass
+  public static void setUp() {
+    cars = IntStream.range(1, 101)
+            .parallel()
+            .mapToObj(i -> createCar())
+            .collect(Collectors.toList());
   }
 
   @Test
@@ -31,7 +34,7 @@ public class StreamsTest {
             .filter(Color.BLACK::equals)
             .count();
 
-    System.out.println(blackCars);
+    System.out.println("There are " + blackCars + " black cars.");
   }
 
   @Test
@@ -41,10 +44,9 @@ public class StreamsTest {
     Predicate<Car> hasAirbag = car -> car.getPieces().contains(Piece.AIRBAGS);
     Predicate<Car> pinkWithAirbags = pinkCar.and(hasAirbag);
 
-    cars.stream()
-            .filter(pinkWithAirbags)
-            .findAny()
-            .ifPresent(System.out::println);
+    boolean carsFound = cars.stream().anyMatch(pinkWithAirbags);
+
+    System.out.println(carsFound ? "There is at least 1 pink car with airbags" : "There is not any pink car with airbag");
   }
 
   @Test
@@ -57,7 +59,7 @@ public class StreamsTest {
     System.out.println(filteredCars.count() + " cars found with all pieces.");
   }
 
-  private Car createCar() {
+  private static Car createCar() {
 
     int numberOfPieces = ThreadLocalRandom.current().nextInt(1, Piece.values().length + 1);
     List<Piece> pieces = Arrays.stream(Piece.values(), 0, numberOfPieces).collect(Collectors.toList());
