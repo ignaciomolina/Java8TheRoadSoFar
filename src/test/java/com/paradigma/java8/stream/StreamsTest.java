@@ -40,13 +40,13 @@ public class StreamsTest {
   @Test
   public void pinkCarsWithAirbags() {
 
-    Predicate<Car> pinkCar = car -> car.getColor() == Color.PINK;
+    Predicate<Car> isPinkCar = car -> car.getColor() == Color.PINK;
     Predicate<Car> hasAirbag = car -> car.getPieces().contains(Piece.AIRBAGS);
-    Predicate<Car> pinkWithAirbags = pinkCar.and(hasAirbag);
+    Predicate<Car> pinkWithAirbags = isPinkCar.and(hasAirbag);
 
     boolean carsFound = cars.stream().anyMatch(pinkWithAirbags);
 
-    System.out.println(carsFound ? "There is at least 1 pink car with airbags" : "There is not any pink car with airbag");
+    System.out.println(carsFound ? "There is at least 1 pink car with airbags" : "There is not any pink car with airbags");
   }
 
   @Test
