@@ -20,11 +20,12 @@ public class TimeDisplayerTest {
 
   @Before
   public void setUp() {
+
     MockitoAnnotations.initMocks(this);
 
     displayer = new TimeDisplayer(clock);
   }
-  
+
   @Test
   public void shouldShowCurrentDate() {
 
@@ -44,9 +45,10 @@ public class TimeDisplayerTest {
 
     then(displayer.displayMessage()).isEqualTo("The current date is: " + instant.toString());
   }
-  
+
   @Test(expected = NullPointerException.class)
   public void shouldNotAcceptNullClock() {
+
     displayer = new TimeDisplayer(null);
   }
 }
