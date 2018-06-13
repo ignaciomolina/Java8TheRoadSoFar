@@ -33,9 +33,9 @@ public class ShouterMessageBuilderTest {
 
   @Test
   public void shouldShoutTheShoutMadeByTheShouter() {
-    String shout = shouter.buildShout("Spartan", "");
+    String shout = shouter.buildShout("Spartan", "This is Java!");
 
-    then(shout).isEqualTo("Spartan shouts: This is a default message!");
+    then(shout).isEqualTo("Spartan shouts: This is Java!");
   }
 
   @Test
