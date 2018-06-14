@@ -54,7 +54,7 @@ public class FunctionalInterfacesTest {
   @Test
   public void consumerTest() {
 
-    Consumer<String> stringConsumer = System.out::print;
+    Consumer<String> stringConsumer = System.out::println;
 
     stringConsumer.accept(HELLO_WORLD);
   }

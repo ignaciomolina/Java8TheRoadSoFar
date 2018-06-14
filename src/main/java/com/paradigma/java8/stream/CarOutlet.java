@@ -1,27 +1,33 @@
 package com.paradigma.java8.stream;
 
+import static com.paradigma.java8.utils.TimeWaiter.waitKey;
+
 import com.paradigma.java8.utils.models.Car;
 import com.paradigma.java8.utils.models.Color;
 import com.paradigma.java8.utils.models.Piece;
 import com.paradigma.java8.utils.models.Wheel;
 
-import java.time.Clock;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class StreamsExamples {
+public class CarOutlet {
 
-  private static List<Car> cars;
+  private List<Car> cars;
 
-  private static void blackCars() {
+  public CarOutlet() {
+    cars = cars = IntStream.range(1, 101)
+            .parallel()
+            .mapToObj(i -> createCar())
+            .collect(Collectors.toList());
+  }
+
+  private void blackCars() {
 
     long blackCars = cars.stream()
             .map(Car::getColor)
@@ -31,7 +37,7 @@ public class StreamsExamples {
     System.out.println("There are " + blackCars + " black cars.");
   }
 
-  private static void pinkCarsWithAirbags() {
+  private void pinkCarsWithAirbags() {
 
     Predicate<Car> isPinkCar = car -> car.getColor() == Color.PINK;
     Predicate<Car> hasAirbag = car -> car.getPieces().contains(Piece.AIRBAGS);
@@ -42,7 +48,7 @@ public class StreamsExamples {
     System.out.println(carsFound ? "There is at least 1 pink car with airbags" : "There is not any pink car with airbags");
   }
 
-  private static void carsWithAllPieces() {
+  private void carsWithAllPieces() {
 
     Stream<Car> filteredCars = cars.stream()
             .filter(car -> car.getPieces().size() == Piece.values().length)
@@ -51,7 +57,7 @@ public class StreamsExamples {
     System.out.println(filteredCars.count() + " cars found with all pieces.");
   }
 
-  private static void groupByColor() {
+  private void groupByColor() {
 
     Map<Color, List<Car>> carsByColor = cars
             .stream()
@@ -64,29 +70,7 @@ public class StreamsExamples {
 
   }
 
-  private static void measureSort() {
-
-    List<String> values = IntStream.range(0, 1000000)
-            .mapToObj(i -> UUID.randomUUID())
-            .map(String::valueOf)
-            .collect(Collectors.toList());
-
-    System.out.println(String.format("sequential sort took: %d ms", timeConsumed(values::stream)));
-    System.out.println(String.format("parallel sort took: %d ms", timeConsumed(values::parallelStream)));
-  }
-
-  private static long timeConsumed(Supplier<Stream<String>> source) {
-
-    Clock clock = Clock.systemUTC();
-
-    long t0 = clock.millis();
-    source.get().sorted().count();
-    long t1 = clock.millis();
-
-    return t1 - t0;
-  }
-
-  private static Car createCar() {
+  private Car createCar() {
 
     int numberOfPieces = ThreadLocalRandom.current().nextInt(1, Piece.values().length + 1);
     List<Piece> pieces = Arrays.stream(Piece.values(), 0, numberOfPieces).collect(Collectors.toList());
@@ -105,15 +89,17 @@ public class StreamsExamples {
 
   public static void main(String[] args) {
 
-    cars = IntStream.range(1, 101)
-            .parallel()
-            .mapToObj(i -> createCar())
-            .collect(Collectors.toList());
+    CarOutlet outlet = new CarOutlet();
 
-    blackCars();
-    pinkCarsWithAirbags();
-    carsWithAllPieces();
-    groupByColor();
-    measureSort();
+    outlet.blackCars();
+    waitKey();
+
+    outlet.pinkCarsWithAirbags();
+    waitKey();
+
+    outlet.carsWithAllPieces();
+    waitKey();
+
+    outlet.groupByColor();
   }
 }
