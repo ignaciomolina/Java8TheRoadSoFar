@@ -59,11 +59,17 @@ public class CarOutlet {
 
   private void groupByColor() {
 
-    Map<Color, List<Car>> carsByColor = cars
+    Map<Color, List<Car>> carsByColorV1 = cars.stream()
+            .collect(Collectors.toMap(Car::getColor, v -> cars.stream()
+                    .filter(car -> car.getColor() == v.getColor())
+                    .collect(Collectors.toList()))
+            );
+
+    Map<Color, List<Car>> carsByColorV2 = cars
             .stream()
             .collect(Collectors.groupingBy(Car::getColor));
 
-    carsByColor.forEach((key, value) -> {
+    carsByColorV2.forEach((key, value) -> {
       System.out.println(key);
       value.forEach(car -> System.out.println("\t" + car));
     });
