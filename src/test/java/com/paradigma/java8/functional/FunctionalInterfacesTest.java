@@ -24,6 +24,13 @@ public class FunctionalInterfacesTest {
   @Test
   public void predicateTest() {
 
+    Predicate<Integer> oldIsGreaterThan10 = new Predicate<Integer>() {
+      @Override
+      public boolean test(Integer number) {
+        return number > 10;
+      }
+    };
+
     Predicate<Integer> isGreaterThan10 = number -> number > 10;
 
     assertTrue(isGreaterThan10.test(12));
