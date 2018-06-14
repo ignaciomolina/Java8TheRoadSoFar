@@ -27,7 +27,7 @@ public class OptionalExample {
 
   public static void main(String[] args) {
 
-    String message = "";
+    String message = "Do only what you need to do and do it only when you need to";
 
     String veryImportantMessage = Optional.ofNullable(message)
                                           .filter(text -> !text.isEmpty())
@@ -42,7 +42,7 @@ public class OptionalExample {
 
     veryImportantMessage = Optional.ofNullable(message)
                                    .filter(not(String::isEmpty))
-                                   .map(String::toLowerCase)
+                                   .map(String::toUpperCase)
                                    .orElseGet(OptionalExample::recoverMessageFromSource);
 
     printIfAny(veryImportantMessage);

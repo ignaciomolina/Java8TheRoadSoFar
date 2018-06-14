@@ -11,7 +11,7 @@ public class TimeWaiter {
 
     handleCheckedException(() -> Thread.sleep(duration.toMillis()));
   }
-  
+
   public static void waitKey() {
 
     handleCheckedException(() -> System.in.read());
@@ -27,7 +27,7 @@ public class TimeWaiter {
       }
     });
   }
-  
+
   private static void handleCheckedException(ThrowingAction task) {
 
     try {
