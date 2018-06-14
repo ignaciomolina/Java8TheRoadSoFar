@@ -67,7 +67,15 @@ public class CarOutlet {
       System.out.println(key);
       value.forEach(car -> System.out.println("\t" + car));
     });
+  }
 
+  private String piecesNotUsed() {
+
+    return cars.stream().flatMap(car -> car.getPieces().stream())
+            .filter(piece -> !Arrays.asList(Piece.values()).contains(piece))
+            .findAny()
+            .map(Piece::toString)
+            .orElseThrow(RuntimeException::new);
   }
 
   private Car createCar() {
@@ -101,5 +109,8 @@ public class CarOutlet {
     waitKey();
 
     outlet.groupByColor();
+    waitKey();
+
+    outlet.piecesNotUsed();
   }
 }
