@@ -43,7 +43,6 @@ public class ActionSchedulerTest {
     Duration after = ofMinutes(10);
 
     scheduler.start();
-
     scheduler.schedule(token, after);
 
     given(clock.millis()).willReturn(currentTime + after.toMillis());

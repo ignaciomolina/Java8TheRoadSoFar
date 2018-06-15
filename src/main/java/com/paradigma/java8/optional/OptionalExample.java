@@ -11,7 +11,7 @@ public class OptionalExample {
 
   public static String recoverMessageFromSource() {
 
-    System.out.println("Requesting to source...");
+    System.out.println("Requesting to source, this could take a while...");
 
     waitFor(ofSeconds(5));
 
