@@ -20,11 +20,8 @@ public class CarOutlet {
 
   private List<Car> cars;
 
-  public CarOutlet() {
-    cars = cars = IntStream.range(1, 101)
-            .parallel()
-            .mapToObj(i -> createCar())
-            .collect(Collectors.toList());
+  public CarOutlet(List<Car> cars) {
+    this.cars = cars;
   }
 
   private void blackCars() {
@@ -60,9 +57,15 @@ public class CarOutlet {
   private void groupByColor() {
 
     Map<Color, List<Car>> carsByColorV1 = cars.stream()
-            .collect(Collectors.toMap(Car::getColor, v -> cars.stream()
-                    .filter(car -> car.getColor() == v.getColor())
-                    .collect(Collectors.toList()))
+            .collect(Collectors.toMap(
+                    Car::getColor,
+                    v -> cars.stream()
+                            .filter(car -> car.getColor() == v.getColor())
+                            .collect(Collectors.toList()),
+                    (list1, list2) -> {
+                      list1.addAll(list2);
+                      return list1;
+                    })
             );
 
     Map<Color, List<Car>> carsByColorV2 = cars
@@ -73,6 +76,8 @@ public class CarOutlet {
       System.out.println(key);
       value.forEach(car -> System.out.println("\t" + car));
     });
+
+    System.out.println(carsByColorV1.size() == carsByColorV2.size());
   }
 
   private String piecesNotUsed() {
@@ -84,7 +89,7 @@ public class CarOutlet {
             .orElseThrow(RuntimeException::new);
   }
 
-  private Car createCar() {
+  private static Car createCar() {
 
     int numberOfPieces = ThreadLocalRandom.current().nextInt(1, Piece.values().length + 1);
     List<Piece> pieces = Arrays.stream(Piece.values(), 0, numberOfPieces).collect(Collectors.toList());
@@ -103,7 +108,12 @@ public class CarOutlet {
 
   public static void main(String[] args) {
 
-    CarOutlet outlet = new CarOutlet();
+    List<Car> cars = IntStream.range(1, 101)
+            .parallel()
+            .mapToObj(i -> createCar())
+            .collect(Collectors.toList());
+
+    CarOutlet outlet = new CarOutlet(cars);
 
     outlet.blackCars();
     waitKey();
