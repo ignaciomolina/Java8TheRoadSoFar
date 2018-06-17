@@ -62,14 +62,17 @@ public class CarOutlet {
                     v -> cars.stream()
                             .filter(car -> car.getColor() == v.getColor())
                             .collect(Collectors.toList()),
-                    (list1, list2) -> Stream.concat(list1.stream(), list2.stream()).collect(Collectors.toList()))
+                    (list1, list2) -> Stream.concat(list1.stream(), list2.stream())
+                            .parallel()
+                            .distinct()
+                            .collect(Collectors.toList()))
             );
 
     Map<Color, List<Car>> carsByColorV2 = cars
             .stream()
             .collect(Collectors.groupingBy(Car::getColor));
 
-    carsByColorV2.forEach((key, value) -> {
+    carsByColorV1.forEach((key, value) -> {
       System.out.println(key);
       value.forEach(car -> System.out.println("\t" + car));
     });
