@@ -62,10 +62,7 @@ public class CarOutlet {
                     v -> cars.stream()
                             .filter(car -> car.getColor() == v.getColor())
                             .collect(Collectors.toList()),
-                    (list1, list2) -> {
-                      list1.addAll(list2);
-                      return list1;
-                    })
+                    (list1, list2) -> Stream.concat(list1.stream(), list2.stream()).collect(Collectors.toList()))
             );
 
     Map<Color, List<Car>> carsByColorV2 = cars
