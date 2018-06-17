@@ -74,7 +74,7 @@ public class CarOutlet {
       value.forEach(car -> System.out.println("\t" + car));
     });
 
-    System.out.println(carsByColorV1.size() == carsByColorV2.size());
+    System.out.println(carsByColorV1.size() == carsByColorV2.size() ? "Maps have the same size" : "Error in maps size!");
   }
 
   private String piecesNotUsed() {
