@@ -14,6 +14,7 @@ public class CompletableForkJoin {
     ExecutorService executor = Executors.newSingleThreadExecutor();
 
     Runnable task = () -> {
+
       waitFor(ofSeconds(1));
       System.out.println("This is thread " + Thread.currentThread().getName());
     };

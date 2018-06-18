@@ -33,21 +33,26 @@ public class AsyncNumbersGenerator {
 
   private CompletableFuture<Integer> generateRandomNumber(int instance) {
 
-    int number = ThreadLocalRandom.current().nextInt(0, max);
-
     return CompletableFuture.supplyAsync(() -> {
 
-      System.out.println("[" + instance + "] Generating number " + number + ", this could take a while.");
-      waitFor(ofSeconds(number));
+      int number = ThreadLocalRandom.current().nextInt(0, max);
 
-      return number;
+      return validateNumber(instance, number);
     });
+  }
+
+  private Integer validateNumber(int instance, int number) {
+
+    System.out.println("[" + instance + "] Validating number " + number + ", this could take a while.");
+    waitFor(ofSeconds(number));
+
+    return number;
   }
 
   public static void main(String [] args) {
 
     AsyncNumbersGenerator generator = new AsyncNumbersGenerator(10);
-    
+
     CompletableFuture<Integer>[] promises = generator.generate(5);
 
     CompletableFuture.anyOf(promises)

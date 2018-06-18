@@ -37,6 +37,7 @@ public class CompletableWithExecutors {
     int seconds = ThreadLocalRandom.current().nextInt(0, 10);
 
     return () -> {
+
       String threadName = Thread.currentThread().getName();
 
       System.out.println("[" + instance + "] Starting job: This is thread " + threadName+ ".");

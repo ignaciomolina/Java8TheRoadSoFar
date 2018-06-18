@@ -8,25 +8,32 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import com.paradigma.java8.functional.Action;
+
 public class ParallelBenchmark {
 
   private static void sortBenchmark() {
 
     List<String> values = IntStream.range(0, 1200000)
-            .mapToObj(i -> UUID.randomUUID())
-            .map(String::valueOf)
-            .collect(Collectors.toList());
+                                   .mapToObj(i -> UUID.randomUUID())
+                                   .map(String::valueOf)
+                                   .collect(Collectors.toList());
 
-    System.out.println(String.format("sequential sort took: %d ms", timeConsumed(values::stream)));
-    System.out.println(String.format("parallel sort took: %d ms", timeConsumed(values::parallelStream)));
+    System.out.println(String.format("sequential sort took: %d ms", timeConsumedBySort(values::stream)));
+    System.out.println(String.format("parallel sort took: %d ms", timeConsumedBySort(values::parallelStream)));
   }
 
-  private static long timeConsumed(Supplier<Stream<String>> source) {
+  private static long timeConsumedBySort(Supplier<Stream<String>> source) {
+
+    return measure(() -> source.get().sorted().count());
+  }
+
+  private static long measure(Action action) {
 
     Clock clock = Clock.systemUTC();
 
     long t0 = clock.millis();
-    source.get().sorted().count();
+    action.execute();
     long t1 = clock.millis();
 
     return t1 - t0;

@@ -2,38 +2,41 @@ package com.paradigma.java8.time.datetimes;
 
 import static com.paradigma.java8.utils.TimeWaiter.waitKey;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.Period;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAmount;
 
 public class OperateWithDates {
 
   private static void showsThePassageOfTime(Temporal currentDate) {
-    
-    int months = 6;
-    int days = 10;
-    int hours = 300;
 
-    Temporal dateWithExtraMonths = currentDate.plus(months, ChronoUnit.MONTHS);
-    Temporal dateWithExtraMonthsAndDays = dateWithExtraMonths.plus(days, ChronoUnit.DAYS);
-    Temporal dateWithExtraMonthsAndDaysAndHours = dateWithExtraMonthsAndDays.plus(hours, ChronoUnit.HOURS);
+    TemporalAmount firstTimePassage = Period.ofMonths(4);
+    int secondTimePassageInDays = 10;
+    Duration thirdTimePassage = Duration.ofHours(300);
+
+    Temporal dateWithExtraMonths = currentDate.plus(firstTimePassage);
+    Temporal dateWithExtraMonthsAndDays = dateWithExtraMonths.plus(secondTimePassageInDays, ChronoUnit.DAYS);
+    Temporal dateWithExtraMonthsAndDaysAndHours = dateWithExtraMonthsAndDays.plus(thirdTimePassage.toMinutes(), ChronoUnit.MINUTES);
 
     System.out.println("Now it is " + currentDate);
     System.out.println("If we wait a few months it will be " + dateWithExtraMonths);
-    System.out.println("When " + days + " days had to pass then it will be " + dateWithExtraMonthsAndDays);
-    System.out.println("And then again when " + hours + " hours had to pass it will be " + dateWithExtraMonthsAndDaysAndHours);
+    System.out.println("When " + secondTimePassageInDays + " days had to pass then it will be " + dateWithExtraMonthsAndDays);
+    System.out.println("And then again when " + thirdTimePassage.toHours() + " hours had to pass it will be " + dateWithExtraMonthsAndDaysAndHours);
   }
 
   public static void main(String [] args) {
 
-    ZonedDateTime date = ZonedDateTime.now();
-
-    showsThePassageOfTime(date);
+    showsThePassageOfTime(ZonedDateTime.now());
     waitKey();
 
-    showsThePassageOfTime(date.toOffsetDateTime());
+    showsThePassageOfTime(OffsetDateTime.now());
     waitKey();
 
-    showsThePassageOfTime(date.toLocalDateTime());
+    showsThePassageOfTime(LocalDateTime.now());
   }
 }

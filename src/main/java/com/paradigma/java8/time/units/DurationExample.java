@@ -1,25 +1,27 @@
 package com.paradigma.java8.time.units;
 
-import static com.paradigma.java8.utils.TimeWaiter.waitFor;
-import static java.time.Duration.ofSeconds;
-
-import java.time.Clock;
-
-import com.paradigma.java8.time.clocks.TimeDisplayer;
+import java.time.Duration;
 
 public class DurationExample {
-  
-  public static void waitASec() {
-    waitFor(ofSeconds(1L));
+
+  public static Duration aggregate(Duration ... amountsOfTime) {
+
+    Duration aggregator = Duration.ZERO;
+
+    for (Duration amount : amountsOfTime) {
+
+      aggregator = aggregator.plus(amount);
+    }
+
+    return aggregator;
   }
 
   public static void main(String[] args) {
-    TimeDisplayer displayer = new TimeDisplayer(Clock.systemUTC());
 
-    System.out.println(displayer.displayMessage());
-    waitASec();
-    System.out.println(displayer.displayMessage());
-    waitFor(ofSeconds(10L));
-    System.out.println(displayer.displayMessage());
+    Duration hours = Duration.ofHours(3);
+    Duration minutes = Duration.ofMinutes(6);
+    Duration nanos = Duration.ofNanos(6);
+
+    System.out.println("total amounts: " + aggregate(hours, minutes, nanos).toNanos());
   }
 }
