@@ -2,6 +2,7 @@ package com.paradigma.java8.utils.models;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 public class Car {
@@ -60,10 +61,22 @@ public class Car {
       this.weight = weight;
       return this;
     }
-    
+
     public Car build() {
 
+      checkPieces();
+
       return new Car(pieces, color, wheels, weight);
+    }
+
+    private void checkPieces() {
+
+      Objects.requireNonNull(pieces);
+
+      if (pieces.isEmpty()) {
+
+        throw new IllegalArgumentException("Car has to have some kind of piece.");
+      }
     }
   }
 

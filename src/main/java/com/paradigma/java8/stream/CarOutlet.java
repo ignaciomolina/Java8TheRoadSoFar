@@ -112,7 +112,7 @@ public class CarOutlet {
 
   public static void main(String[] args) {
 
-    List<Car> cars = IntStream.range(1, 101)
+    List<Car> cars = IntStream.rangeClosed(1, 100)
                               .parallel()
                               .mapToObj(i -> createRandomlyCar())
                               .collect(Collectors.toList());
