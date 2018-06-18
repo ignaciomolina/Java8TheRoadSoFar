@@ -1,20 +1,22 @@
 package com.paradigma.java8.stream;
 
+import static com.paradigma.java8.utils.Predicates.not;
 import static com.paradigma.java8.utils.TimeWaiter.waitKey;
-
-import com.paradigma.java8.utils.models.Car;
-import com.paradigma.java8.utils.models.Color;
-import com.paradigma.java8.utils.models.Piece;
-import com.paradigma.java8.utils.models.Wheel;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+
+import com.paradigma.java8.utils.models.Car;
+import com.paradigma.java8.utils.models.Color;
+import com.paradigma.java8.utils.models.Piece;
+import com.paradigma.java8.utils.models.Wheel;
 
 public class CarOutlet {
 
@@ -48,8 +50,8 @@ public class CarOutlet {
   private void carsWithAllPieces() {
 
     Stream<Car> filteredCars = cars.stream()
-            .filter(car -> car.getPieces().size() == Piece.values().length)
-            .peek(System.out::println);
+                                   .filter(car -> car.getPieces().size() == Piece.values().length)
+                                   .peek(System.out::println);
 
     System.out.println(filteredCars.count() + " cars found with all pieces.");
   }
@@ -57,62 +59,63 @@ public class CarOutlet {
   private void groupByColor() {
 
     Map<Color, List<Car>> carsByColorV1 = cars.stream()
-            .collect(Collectors.toMap(
-                    Car::getColor,
-                    v -> cars.stream()
-                            .filter(car -> car.getColor() == v.getColor())
-                            .collect(Collectors.toList()),
-                    (list1, list2) -> Stream.of(list1, list2)
-                            .parallel()
-                            .flatMap(List::stream)
-                            .distinct()
-                            .collect(Collectors.toList()))
-            );
+      .collect(Collectors.toMap(Car::getColor,
+                                v -> cars.stream()
+                                         .filter(car -> car.getColor() == v.getColor())
+                                         .collect(Collectors.toList()),
+                                (list1, list2) -> Stream.of(list1, list2)
+                                                        .parallel()
+                                                        .flatMap(List::stream)
+                                                        .distinct()
+                                                        .collect(Collectors.toList())));
 
-    Map<Color, List<Car>> carsByColorV2 = cars
-            .stream()
-            .collect(Collectors.groupingBy(Car::getColor));
+    Map<Color, List<Car>> carsByColorV2 = cars.stream().collect(Collectors.groupingBy(Car::getColor));
 
     carsByColorV1.forEach((key, value) -> {
-      System.out.println(key);
-      value.forEach(car -> System.out.println("\t" + car));
-    });
+                    System.out.println(key);
+                    value.forEach(car -> System.out.println("\t" + car));
+                  });
 
-    System.out.println(carsByColorV1.size() == carsByColorV2.size() ? "Maps have the same size" : "Error in maps size!");
+    System.out.println(carsByColorV1.size() == carsByColorV2.size() ? "Maps have the same size" :
+                                                                      "Error in maps size!");
   }
 
   private String piecesNotUsed() {
 
-    return cars.stream().flatMap(car -> car.getPieces().stream())
-            .filter(piece -> !Arrays.asList(Piece.values()).contains(piece))
-            .findAny()
-            .map(Piece::toString)
-            .orElseThrow(RuntimeException::new);
+    return cars.stream()
+               .map(Car::getPieces)
+               .flatMap(Set::stream)
+               .filter(not(piece -> Arrays.asList(Piece.values()).contains(piece)))
+               .findAny()
+               .map(Piece::toString)
+               .orElseThrow(RuntimeException::new);
   }
 
-  private static Car createCar() {
+  private static Car createRandomlyCar() {
 
-    int numberOfPieces = ThreadLocalRandom.current().nextInt(1, Piece.values().length + 1);
+    ThreadLocalRandom randomFactory = ThreadLocalRandom.current();
+
+    int numberOfPieces = randomFactory.nextInt(1, Piece.values().length + 1);
     List<Piece> pieces = Arrays.stream(Piece.values(), 0, numberOfPieces).collect(Collectors.toList());
 
-    Color color = Color.values()[ThreadLocalRandom.current().nextInt(Color.values().length)];
-    Wheel wheel = Wheel.values()[ThreadLocalRandom.current().nextInt(Wheel.values().length)];
-    int weight = ThreadLocalRandom.current().nextInt(800, 2200);
+    Color color = Color.values()[randomFactory.nextInt(Color.values().length)];
+    Wheel wheel = Wheel.values()[randomFactory.nextInt(Wheel.values().length)];
+    int weight = randomFactory.nextInt(800, 2200);
 
     return Car.builder()
-            .pieces(pieces)
-            .color(color)
-            .wheels(wheel)
-            .weight(weight)
-            .build();
+              .pieces(pieces)
+              .color(color)
+              .wheels(wheel)
+              .weight(weight)
+              .build();
   }
 
   public static void main(String[] args) {
 
     List<Car> cars = IntStream.range(1, 101)
-            .parallel()
-            .mapToObj(i -> createCar())
-            .collect(Collectors.toList());
+                              .parallel()
+                              .mapToObj(i -> createRandomlyCar())
+                              .collect(Collectors.toList());
 
     CarOutlet outlet = new CarOutlet(cars);
 

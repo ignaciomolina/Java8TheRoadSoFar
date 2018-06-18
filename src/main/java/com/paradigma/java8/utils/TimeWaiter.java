@@ -3,39 +3,30 @@ package com.paradigma.java8.utils;
 import java.time.Duration;
 
 import com.paradigma.java8.functional.Action;
-import com.paradigma.java8.functional.ThrowingAction;
 
 public class TimeWaiter {
 
   public static void waitFor(Duration duration) {
 
-    handleCheckedException(() -> Thread.sleep(duration.toMillis()));
+    Unchecked.action(() -> Thread.sleep(duration.toMillis()))
+             .execute();
   }
 
   public static void waitKey() {
 
-    handleCheckedException(() -> System.in.read());
+    Unchecked.action(() -> System.in.read())
+             .execute();
   }
 
   public static void doUntilKey(Action task) {
 
-    handleCheckedException(() -> {
+    Unchecked.action(() -> {
 
-      while (System.in.available() == 0) {
+                      while (System.in.available() == 0) {
 
-        task.execute();
-      }
-    });
-  }
-
-  private static void handleCheckedException(ThrowingAction task) {
-
-    try {
-
-      task.tryToExecute();
-    } catch (Exception e) {
-
-      throw new RuntimeException(e);
-    }
+                        task.execute();
+                      }
+                    })
+            .execute();
   }
 }
