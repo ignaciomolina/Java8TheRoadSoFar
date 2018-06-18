@@ -10,14 +10,14 @@ import java.util.concurrent.CompletionStage;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import com.paradigma.java8.utils.models.Car;
-import com.paradigma.java8.utils.models.CarSpecifications;
-import com.paradigma.java8.utils.models.CarSpecifications.ColorSpecification;
-import com.paradigma.java8.utils.models.CarSpecifications.PiecesSpecification;
-import com.paradigma.java8.utils.models.CarSpecifications.WheelSpecification;
-import com.paradigma.java8.utils.models.Color;
-import com.paradigma.java8.utils.models.Piece;
-import com.paradigma.java8.utils.models.Wheel;
+import com.paradigma.java8.utils.models.cars.Car;
+import com.paradigma.java8.utils.models.cars.CarSpecifications;
+import com.paradigma.java8.utils.models.cars.Color;
+import com.paradigma.java8.utils.models.cars.Piece;
+import com.paradigma.java8.utils.models.cars.Wheel;
+import com.paradigma.java8.utils.models.cars.CarSpecifications.ColorSpecification;
+import com.paradigma.java8.utils.models.cars.CarSpecifications.PiecesSpecification;
+import com.paradigma.java8.utils.models.cars.CarSpecifications.WheelSpecification;
 
 public class CarAssemblyLine {
 

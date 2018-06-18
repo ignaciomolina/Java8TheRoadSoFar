@@ -1,4 +1,4 @@
-package com.paradigma.java8.utils.models;
+package com.paradigma.java8.utils.models.cars;
 
 import java.time.Duration;
 import java.util.ArrayList;

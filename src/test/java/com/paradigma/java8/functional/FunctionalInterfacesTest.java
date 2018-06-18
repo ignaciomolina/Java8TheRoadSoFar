@@ -3,8 +3,9 @@ package com.paradigma.java8.functional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.paradigma.java8.utils.models.Car;
 import org.junit.Test;
+
+import com.paradigma.java8.utils.models.cars.Car;
 
 import java.util.Arrays;
 import java.util.Comparator;

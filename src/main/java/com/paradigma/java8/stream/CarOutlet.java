@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import com.paradigma.java8.utils.models.Car;
-import com.paradigma.java8.utils.models.Color;
-import com.paradigma.java8.utils.models.Piece;
-import com.paradigma.java8.utils.models.Wheel;
+import com.paradigma.java8.utils.models.cars.Car;
+import com.paradigma.java8.utils.models.cars.Color;
+import com.paradigma.java8.utils.models.cars.Piece;
+import com.paradigma.java8.utils.models.cars.Wheel;
 
 public class CarOutlet {
 
