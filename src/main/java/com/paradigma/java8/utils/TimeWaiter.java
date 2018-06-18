@@ -3,6 +3,7 @@ package com.paradigma.java8.utils;
 import java.time.Duration;
 
 import com.paradigma.java8.functional.Action;
+import com.paradigma.java8.functional.Unchecked;
 
 public class TimeWaiter {
 

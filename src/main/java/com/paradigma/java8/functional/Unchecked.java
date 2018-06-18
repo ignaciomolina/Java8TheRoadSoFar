@@ -1,7 +1,5 @@
-package com.paradigma.java8.utils;
+package com.paradigma.java8.functional;
 
-import com.paradigma.java8.functional.Action;
-import com.paradigma.java8.functional.ThrowingAction;
 import com.paradigma.java8.utils.exceptions.UncheckedException;
 
 public class Unchecked {

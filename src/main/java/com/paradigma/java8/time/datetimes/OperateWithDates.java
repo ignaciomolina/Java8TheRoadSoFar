@@ -16,7 +16,7 @@ public class OperateWithDates {
   private static void showsThePassageOfTime(Temporal currentDate) {
 
     TemporalAmount firstTimePassage = Period.ofMonths(4);
-    long secondTimePassageInDays = 10;
+    int secondTimePassageInDays = 10;
     Duration thirdTimePassage = Duration.ofHours(300);
 
     Temporal dateWithExtraMonths = currentDate.plus(firstTimePassage);
