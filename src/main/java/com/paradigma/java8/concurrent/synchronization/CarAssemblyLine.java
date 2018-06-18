@@ -12,12 +12,12 @@ import java.util.function.Supplier;
 
 import com.paradigma.java8.utils.models.cars.Car;
 import com.paradigma.java8.utils.models.cars.CarSpecifications;
-import com.paradigma.java8.utils.models.cars.Color;
-import com.paradigma.java8.utils.models.cars.Piece;
-import com.paradigma.java8.utils.models.cars.Wheel;
 import com.paradigma.java8.utils.models.cars.CarSpecifications.ColorSpecification;
 import com.paradigma.java8.utils.models.cars.CarSpecifications.PiecesSpecification;
 import com.paradigma.java8.utils.models.cars.CarSpecifications.WheelSpecification;
+import com.paradigma.java8.utils.models.cars.Color;
+import com.paradigma.java8.utils.models.cars.Piece;
+import com.paradigma.java8.utils.models.cars.Wheel;
 
 public class CarAssemblyLine {
 
@@ -95,7 +95,7 @@ public class CarAssemblyLine {
 
     PiecesSpecification pieces = new PiecesSpecification(ofSeconds(3), asList(Piece.DOORS, Piece.BODY, Piece.ENGINE, Piece.BRAKES));
     ColorSpecification color = new ColorSpecification(ofSeconds(2), Color.RED);
-    WheelSpecification wheels = new WheelSpecification(ofSeconds(1), Wheel.BRIDGESTONE);
+    WheelSpecification wheels = new WheelSpecification(ofSeconds(2), Wheel.BRIDGESTONE);
 
     CarSpecifications specifications = new CarSpecifications(pieces, color, wheels);
 
@@ -103,7 +103,7 @@ public class CarAssemblyLine {
 
     CompletableFuture.runAsync(() -> says(0, "Car order made!"))
                      .thenRun(() -> says(2, "You can wait there meanwhile..."))
-                     .thenRun(() -> says(1, "Do you want something to drink?"))
+                     .thenRun(() -> says(2, "Do you want something to drink?"))
                      .thenCombine(carPromise, (v, car) -> {
                        says(0, "Here is your great new car just as you wanted: " + car);
                        return car;
