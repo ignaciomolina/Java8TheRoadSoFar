@@ -5,6 +5,7 @@ import static com.paradigma.java8.utils.TimeWaiter.waitKey;
 
 import java.time.Clock;
 import java.time.Duration;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -76,12 +77,12 @@ public class ActionScheduler {
     synchronized(actions) {
 
       toBeTriggered = actions.stream()
-                             .filter(delayed -> delayed.getTriggerDue() <= clock.millis())
+                             .filter(not(delayed -> delayed.getTriggerDue().isAfter(ZonedDateTime.now(clock))))
                              .collect(Collectors.toList());
     }
 
     toBeTriggered.stream()
-                 .map(DelayedAction::getAction) 
+                 .map(DelayedAction::getAction)
                  .forEach(Action::execute);
 
     actions.removeAll(toBeTriggered);
@@ -91,7 +92,7 @@ public class ActionScheduler {
 
     checkIsActive();
 
-    DelayedAction delayed = new DelayedAction(action, clock.millis() + after.toMillis());
+    DelayedAction delayed = new DelayedAction(action, ZonedDateTime.now(clock).plus(after));
     actions.add(delayed);
   }
 

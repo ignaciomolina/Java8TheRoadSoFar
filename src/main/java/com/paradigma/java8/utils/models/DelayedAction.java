@@ -1,13 +1,15 @@
 package com.paradigma.java8.utils.models;
 
+import java.time.ZonedDateTime;
+
 import com.paradigma.java8.functional.Action;
 
 public class DelayedAction {
 
   private Action action;
-  private long triggerDue;
+  private ZonedDateTime triggerDue;
 
-  public DelayedAction(Action action, long triggerDue) {
+  public DelayedAction(Action action, ZonedDateTime triggerDue) {
 
     this.triggerDue = triggerDue;
     this.action = action;
@@ -17,7 +19,7 @@ public class DelayedAction {
     return action;
   }
 
-  public long getTriggerDue() {
+  public ZonedDateTime getTriggerDue() {
     return triggerDue;
   }
 }
