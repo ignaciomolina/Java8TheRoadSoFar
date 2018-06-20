@@ -1,6 +1,7 @@
 package com.paradigma.java8.utils;
 
 import java.time.Duration;
+import java.util.Scanner;
 
 import com.paradigma.java8.functional.Action;
 import com.paradigma.java8.functional.Unchecked;
@@ -17,6 +18,11 @@ public class TimeWaiter {
 
     Unchecked.action(() -> System.in.read())
              .execute();
+  }
+
+  public static int waitNumber() {
+    return Unchecked.supplier(() -> new Scanner(System.in).nextInt())
+                   .get();
   }
 
   public static void doUntilKey(Action task) {
