@@ -20,9 +20,9 @@ public class TimeWaiter {
              .execute();
   }
 
-  public static int waitNumber() {
-    return Unchecked.supplier(() -> new Scanner(System.in).nextInt())
-                   .get();
+  public static double waitNumber() {
+    return Unchecked.supplier(() -> new Scanner(System.in).nextDouble())
+                    .get();
   }
 
   public static void doUntilKey(Action task) {
