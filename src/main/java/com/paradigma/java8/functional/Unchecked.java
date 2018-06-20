@@ -15,7 +15,7 @@ public class Unchecked {
         return supplier.get();
       } catch (Throwable e) {
 
-        toUnckedException(e);
+        toUncheckedException(e);
 
         throw new IllegalStateException("Exception handler has failed.");
       }
@@ -31,12 +31,12 @@ public class Unchecked {
         action.tryToExecute();
       } catch (Throwable e) {
 
-        toUnckedException(e);
+        toUncheckedException(e);
       }
     };
   }
 
-  private static void toUnckedException(Throwable e) {
+  private static void toUncheckedException(Throwable e) {
 
     if (e instanceof RuntimeException) {
 
