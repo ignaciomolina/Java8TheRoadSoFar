@@ -9,6 +9,8 @@ import static org.mockito.Mockito.verify;
 
 import java.time.Clock;
 import java.time.Duration;
+import java.time.Instant;
+import java.time.ZoneId;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +24,7 @@ public class ActionSchedulerTest {
   @Mock private Clock clock;
   @Mock private Action token;
 
-  private long currentTime;
+  private Instant currentInstant;
   private ActionScheduler scheduler;
 
   @Before
@@ -30,9 +32,10 @@ public class ActionSchedulerTest {
 
     MockitoAnnotations.initMocks(this);
 
-    currentTime = 0L;
+    currentInstant = Instant.now();
 
-    given(clock.millis()).willReturn(currentTime);
+    given(clock.instant()).willReturn(currentInstant);
+    given(clock.getZone()).willReturn(ZoneId.systemDefault());
 
     scheduler = new ActionScheduler(clock);
   }
@@ -45,7 +48,7 @@ public class ActionSchedulerTest {
     scheduler.start();
     scheduler.schedule(token, after);
 
-    given(clock.millis()).willReturn(currentTime + after.toMillis());
+    given(clock.instant()).willReturn(currentInstant.plus(after));
 
     verify(token, timeout(100)).execute();
 
@@ -60,7 +63,7 @@ public class ActionSchedulerTest {
     scheduler.start();
     scheduler.schedule(token, after);
 
-    given(clock.millis()).willReturn(currentTime + after.toMillis() - 1);
+    given(clock.instant()).willReturn(currentInstant.plus(after).minus(Duration.ofSeconds(1L)));
 
     verify(token, after(100).never()).execute();
 

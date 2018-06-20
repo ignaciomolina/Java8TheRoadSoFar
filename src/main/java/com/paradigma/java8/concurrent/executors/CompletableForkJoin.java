@@ -21,6 +21,7 @@ public class CompletableForkJoin {
 
     runAsync(task).thenRunAsync(task, executor)
                   .thenRun(task)
+                  .thenRunAsync(task)
                   .toCompletableFuture()
                   .join();
 
