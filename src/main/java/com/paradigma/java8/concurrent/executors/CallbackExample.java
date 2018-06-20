@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class CallbackExample {
 
-  public static void findNumber(CompletableFuture<Double> future) {
+  public static void findNumberAndNotify(CompletableFuture<Double> future) {
 
     Runnable completeStage = () -> {
       waitFor(ofSeconds(5));
@@ -19,8 +19,8 @@ public class CallbackExample {
       future.complete((double) ThreadLocalRandom.current().nextInt(0, 100));
     };
 
-    Executors.newCachedThreadPool()
-            .submit(completeStage);
+    Executors.newSingleThreadExecutor()
+             .submit(completeStage);
   }
 
   public static void main(String[] args) {
@@ -32,7 +32,7 @@ public class CallbackExample {
                                           .thenApply(x -> x / 2.0D)
                                           .thenAccept(System.out::println);
 
-    findNumber(yPromise);
+    findNumberAndNotify(yPromise);
 
     System.out.println("Give me a number");
     double number = waitNumber();
