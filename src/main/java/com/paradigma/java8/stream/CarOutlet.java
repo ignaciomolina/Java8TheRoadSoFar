@@ -3,6 +3,11 @@ package com.paradigma.java8.stream;
 import static com.paradigma.java8.utils.Predicates.not;
 import static com.paradigma.java8.utils.TimeWaiter.waitKey;
 
+import com.paradigma.java8.utils.models.cars.Car;
+import com.paradigma.java8.utils.models.cars.Color;
+import com.paradigma.java8.utils.models.cars.Piece;
+import com.paradigma.java8.utils.models.cars.Wheel;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -12,11 +17,6 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
-import com.paradigma.java8.utils.models.cars.Car;
-import com.paradigma.java8.utils.models.cars.Color;
-import com.paradigma.java8.utils.models.cars.Piece;
-import com.paradigma.java8.utils.models.cars.Wheel;
 
 public class CarOutlet {
 
@@ -80,7 +80,7 @@ public class CarOutlet {
                                                                       "Error in maps size!");
   }
 
-  private String piecesNotUsed() {
+  private String pieceNotUsed() {
 
     return cars.stream()
                .map(Car::getPieces)
@@ -131,6 +131,6 @@ public class CarOutlet {
     outlet.groupByColor();
     waitKey();
 
-    outlet.piecesNotUsed();
+    outlet.pieceNotUsed();
   }
 }
