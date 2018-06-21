@@ -2,6 +2,7 @@ package com.paradigma.java8.utils;
 
 import java.time.Duration;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import com.paradigma.java8.functional.Action;
 import com.paradigma.java8.functional.Unchecked;
@@ -10,7 +11,7 @@ public class TimeWaiter {
 
   public static void waitFor(Duration duration) {
 
-    Unchecked.action(() -> Thread.sleep(duration.toMillis()))
+    Unchecked.action(() -> TimeUnit.MILLISECONDS.sleep(duration.toMillis()))
              .execute();
   }
 
