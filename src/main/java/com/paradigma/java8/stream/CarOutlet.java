@@ -38,9 +38,9 @@ public class CarOutlet {
 
   private void pinkCarsWithAirbags() {
 
-    Predicate<Car> isPinkCar = car -> car.getColor() == Color.PINK;
-    Predicate<Car> hasAirbag = car -> car.getPieces().contains(Piece.AIRBAGS);
-    Predicate<Car> pinkWithAirbags = isPinkCar.and(hasAirbag);
+    Predicate<Car> isAPinkCar = car -> car.getColor() == Color.PINK;
+    Predicate<Car> hasAirbags = car -> car.getPieces().contains(Piece.AIRBAGS);
+    Predicate<Car> pinkWithAirbags = isAPinkCar.and(hasAirbags);
 
     boolean carsFound = cars.stream().anyMatch(pinkWithAirbags);
 
