@@ -1,7 +1,7 @@
 package com.paradigma.java8.time.clocks;
 
 import java.time.Clock;
-import java.time.ZoneOffset;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
@@ -14,6 +14,6 @@ public class TimeDisplayer {
   }
   
   public String displayMessage() {
-    return "The current date is: " + ZonedDateTime.ofInstant(clock.instant(), ZoneOffset.UTC);
+    return "The current date is: " + ZonedDateTime.now(clock);
   }
 }

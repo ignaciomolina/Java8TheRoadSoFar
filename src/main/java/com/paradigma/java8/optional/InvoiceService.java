@@ -2,16 +2,14 @@ package com.paradigma.java8.optional;
 
 import static com.paradigma.java8.utils.models.membership.MembershipLevel.GOLD;
 import static com.paradigma.java8.utils.models.membership.MembershipLevel.PLATINUM;
-import static java.util.Optional.empty;
-import static java.util.Optional.of;
-
-import java.util.Objects;
-import java.util.Optional;
-import java.util.function.Function;
 
 import com.paradigma.java8.utils.JavaVersion;
 import com.paradigma.java8.utils.models.membership.Customer;
 import com.paradigma.java8.utils.models.membership.MemberCard;
+
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Function;
 
 public class InvoiceService {
 
@@ -50,6 +48,16 @@ public class InvoiceService {
     return "";
   }
 
+  private String getDiscountLineWithOpt(Customer customer) {
+
+    return Optional.ofNullable(customer)
+            .map(Customer::getMemberCard)
+            .flatMap(this::getDiscountPercentageWithOpt)
+            .map(String::valueOf)
+            .map("Discount%: "::concat)
+            .orElse("");
+  }
+
   private Double getDiscountPercentageClassic(MemberCard card) {
 
     if (PLATINUM.equals(card.getLevel())) {
@@ -63,26 +71,16 @@ public class InvoiceService {
     return null;
   }
 
-  private String getDiscountLineWithOpt(Customer customer) {
-
-    return Optional.of(customer)
-                   .map(Customer::getMemberCard)
-                   .flatMap(this::getDiscountPercentageWithOpt)
-                   .map(String::valueOf)
-                   .map("Discount%: "::concat)
-                   .orElse("");
-  }
-
   private Optional<Double> getDiscountPercentageWithOpt(MemberCard card) {
 
     if (PLATINUM.equals(card.getLevel())) {
 
-      return of(10.0D);
+      return Optional.of(10.0D);
     } else if (GOLD.equals(card.getLevel())) {
 
-      return of(5.0D);
+      return Optional.of(5.0D);
     }
 
-    return empty();
+    return Optional.empty();
   }
 }

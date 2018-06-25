@@ -6,6 +6,8 @@ import static org.mockito.BDDMockito.given;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +24,8 @@ public class TimeDisplayerTest {
   public void setUp() {
 
     MockitoAnnotations.initMocks(this);
+
+    given(clock.getZone()).willReturn(ZoneOffset.UTC);
 
     displayer = new TimeDisplayer(clock);
   }
