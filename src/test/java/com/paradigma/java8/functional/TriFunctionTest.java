@@ -34,9 +34,9 @@ public class TriFunctionTest {
 
 class Point {
 
-  private float x;
-  private float y;
-  private float z;
+  private final float x;
+  private final float y;
+  private final float z;
 
   public Point(float x, float y) {
     this(x, y, 0.0F);

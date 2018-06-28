@@ -22,6 +22,6 @@ public class DurationExample {
     Duration minutes = Duration.ofMinutes(6);
     Duration nanos = Duration.ofNanos(6);
 
-    System.out.println("total amounts: " + aggregate(hours, minutes, nanos).toNanos());
+    System.out.println("total amounts: " + aggregate(hours, minutes, nanos).toNanos() + " nanoseconds.");
   }
 }
