@@ -15,9 +15,7 @@ public class Unchecked {
         return supplier.get();
       } catch (Throwable e) {
 
-        toUncheckedException(e);
-
-        throw new IllegalStateException("Exception handler has failed.");
+        throw toUncheckedException(e);
       }
     };
   }
@@ -31,18 +29,18 @@ public class Unchecked {
         action.tryToExecute();
       } catch (Throwable e) {
 
-        toUncheckedException(e);
+        throw toUncheckedException(e);
       }
     };
   }
 
-  private static void toUncheckedException(Throwable e) {
+  private static RuntimeException toUncheckedException(Throwable e) {
 
     if (e instanceof RuntimeException) {
 
-      throw (RuntimeException) e;
+      return (RuntimeException) e;
     }
 
-    throw new UncheckedException(e);
+    return new UncheckedException(e);
   }
 }
